@@ -36,7 +36,7 @@
             crossorigin="anonymous"></script>
     <script>
       $(function() {
-        let currentProject = window.location.pathname.replace(/\//g, "");;
+        let currentProject = window.location.pathname.replace(/\//g, "");
         let url = "/api/issues/"+currentProject;
         $('#projectTitle').text('All issues for: '+currentProject)
         $.ajax({
@@ -44,7 +44,7 @@
           url: url,
           success: function(data)
           {
-            let issues= [];
+            let issues = [];
             data.forEach(function(ele) {
               console.log(ele);
               let openstatus;
@@ -61,7 +61,6 @@
                 '<p class="id"><b>Created on:</b> '+ele.created_on+'  <b>Last updated:</b> '+ele.updated_on,
                 '<br><a href="#" class="closeIssue" id="'+ele._id+'">close?</a> <a href="#" class="deleteIssue" id="'+ele._id+'">delete?</a>',
                 '</div>'
-                
               ];
               issues.push(single.join(''));
             });
@@ -86,7 +85,7 @@
             type: "PUT",
             url: url,
             data: {_id: $(this).attr('id'), open: false},
-            success: function(data) { alert(data); window.location.reload(true); }
+            success: function(data) { alert(JSON.stringify(data)); window.location.reload(true); }
           });
           e.preventDefault();
         });
@@ -96,7 +95,7 @@
             type: "DELETE",
             url: url,
             data: {_id: $(this).attr('id')},
-            success: function(data) { alert(data); window.location.reload(true); }
+            success: function(data) { alert(JSON.stringify(data)); window.location.reload(true); }
           });
           e.preventDefault();
         });
