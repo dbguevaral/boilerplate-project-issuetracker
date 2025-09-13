@@ -8,9 +8,9 @@ chai.use(chaiHttp);
 suite('Functional Tests', function() {
     this.timeout(5000);
 
-    /*let validId;
+    let validId;
 
-        before(async function () {
+        setup(async function () {
 
             const res = await chai
                 .request(server)
@@ -32,17 +32,17 @@ suite('Functional Tests', function() {
             .post('/api/issues/MyProject')
             .send({ 
                 issue_title: "First",
-                issue_text: "This is the first one of all",
-                created_by: "Diego Brando",
-                assigned_to: "No one",
-                status_text: "what goes here?"
+                issue_text: "First",
+                created_by: "Diego G.",
+                assigned_to: "Sonia A.",
+                status_text: "Lavandería"
             })
             .end(function (err, res) {
                 assert.equal(res.status, 200);
                 assert.equal(res.body.issue_title, "First");
-                assert.equal(res.body.issue_text, "This is the first one of all");
-                assert.equal(res.body.created_by, "Diego Brando");
-                assert.equal(res.body.status_text, "what goes here?");
+                assert.equal(res.body.issue_text, "First");
+                assert.equal(res.body.created_by, "Diego G.");
+                assert.equal(res.body.status_text, "Lavandería");
                 done();
             });
     });
@@ -193,11 +193,11 @@ suite('Functional Tests', function() {
             .request(server)
             .keepOpen()
             .put('/api/issues/MyProject')
-            .send({_id: "68c0918b750cec281f57ecad"})
+            .send({_id: validId})
             .end(function (err, res) {
                 assert.deepEqual(res.body, {
                     error: 'no update field(s) sent', 
-                    _id: "68c0918b750cec281f57ecad"
+                    _id: validId
                 });
                 done();
             });
@@ -209,11 +209,11 @@ suite('Functional Tests', function() {
             .request(server)
             .keepOpen()
             .put('/api/issues/MyProject')
-            .send({_id: "asdsadadas"})
+            .send({_id: "invalid _id"})
             .end(function (err, res) {
                 assert.deepEqual(res.body, {
                     error: 'could not update', 
-                    '_id': "asdsadadas"
+                    _id: "invalid _id"
                 });
                 done();
             });
@@ -229,10 +229,8 @@ suite('Functional Tests', function() {
             _id: validId
         })
         .end(function (err, res) {
-            assert.deepEqual(res.body, {
-                result: 'successfully deleted',
-                _id: validId
-            });
+            assert.equal(res.body.result, 'successfully deleted');
+            assert.equal(res.body._id, validId);
             done();
         });
     });
@@ -244,12 +242,12 @@ suite('Functional Tests', function() {
         .keepOpen()
         .delete('/api/issues/MyProject')
         .send({
-            _id: "invalidId"
+            _id: 23423434
         })
         .end(function (err, res) {
             assert.deepEqual(res.body, {
                 error: 'could not delete',
-                _id: "invalidId"
+                _id: 23423434
             });
             done();
         });
@@ -270,6 +268,6 @@ suite('Functional Tests', function() {
             });
             done();
         });
-    });*/
+    });
 
 });
